@@ -10,6 +10,7 @@ const store = require('./db/db.json');
 const { allowedNodeEnvironmentFlags } = require('process');
 const res = require('express/lib/response');
 
+
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -55,37 +56,26 @@ app.get('*', (req, res) =>{
 
 
 function createNote (body) {
-        fs.writeFileSync(
-            path.join(__dirname, './db/db.json'),
-            JSON.stringify(body, null)
-        // return createNote;
-        );
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify(body, null)
+    // return createNote;
+    );
 };
 
-// //NEW
-// function createNote2 (body) {
-//     const notesBatch = body;
-//     if (!Array.isArray(notesBatch))
-//     notesBatch = [];
+function deleteNote (body) {
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify(body, null)
 
-//     if (notesBatch.length === 0)
-//         notesBatch.push(0);
+    );
+};
 
-//         body.id = notesBatch[0];
-//         notesBatch[0]++;
-
-//         notesBatch.push(createNote);
-//         fs.writeFileSync(
-//             path.join(dirname, './db/db.json'),
-//             JSON.stringify(notesBatch, null)
-//         );
-//         return createNote;
-// };
-
-
-
-app.listen(PORT, () => {
-    console.log(`API server now on port http://localhost:${PORT}`);
+app.delete('/api/notes/:id', (body) => {
+    deleteNote(store),
+    res.json(true);
 });
 
-
+app.listen(PORT, () => {
+    console.log(`API server now on port ${PORT}!`);
+});
